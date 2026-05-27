@@ -1,7 +1,6 @@
 const router = require("express").Router();
 const bcrypt = require("bcrypt");
 const User = require("../models/User");
-const Bookmark = require("../models/Bookmark");
 const { signToken } = require("../utils/auth");
 
 router.post("/register", async (req, res) => {

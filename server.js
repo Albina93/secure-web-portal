@@ -6,6 +6,7 @@ const db = require("./config/connection");
 
 app.use(express.json());
 app.use("/api/users", require("./routes/userRoutes"));
+app.use("/api/bookmarks", require("./routes/bookmarkRoutes"));
 
 // app.get("/", (req, res) => {
 //   res.send("Test...");
