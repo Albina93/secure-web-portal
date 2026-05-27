@@ -55,4 +55,39 @@ router.get("/:id", async (req, res) => {
   }
 });
 
+router.put("/:id", async (req, res) => {
+  try {
+    const { title, url, description } = req.body;
+
+    const updated = await Bookmark.findOneAndUpdate(
+      { _id: req.params.id, user: req.user.id },
+      { title, url, description },
+      { new: true, runValidators: true },
+    );
+    if (!updated) {
+      return res.status(404).json({ message: "Bookmark not found" });
+    }
+    res.json(updated);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: "Server error updating bookmark" });
+  }
+});
+
+router.delete("/:id", async (req, res) => {
+  try {
+    const deleted = await Bookmark.findOneAndDelete({
+      _id: req.params.id,
+      user: req.user.id,
+    });
+    if (!deleted) {
+      return res.status(404).json({ message: "Bookmark not found" });
+    }
+    res.json({ message: "Bookmark deleted" });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: "Server error deleting bookmark" });
+  }
+});
+
 module.exports = router;
